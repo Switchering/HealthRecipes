@@ -1,53 +1,72 @@
 <?php
-
-/* @var $this yii\web\View */
-
-$this->title = 'My Yii Application';
+use yii\widgets\LinkPager;
+use yii\helpers\Url;
 ?>
-<div class="site-index">
 
-    <div class="jumbotron">
-        <h1>Congratulations!</h1>
 
-        <p class="lead">You have successfully created your Yii-powered application.</p>
+<!--Start Main Container-->    
 
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
-    </div>
+<div class="container zerogrid">
+    <!--Start Posts Container -->
+    <div class="col-2-3" id="post-container">
+        <div class="wrap-col">
+            <?php foreach($articles as $article):?>
+            <!-- Start Artcicle Item -->
+            <div class="post">
+                <div class="post-margin">
+                    <div class="post-avatar">
+                        <div class="avatar-frame"></div>
+                            <img alt='' src='http://1.gravatar.com/avatar/16afd22c8bf5c2398b206a76c9316a3c?s=70&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D70&amp;r=G' class='avatar avatar-70 photo' height='70' width='70' /></div>
+                            <h4 class="post-title"><a href="<?= Url::toRoute(['site/single', 'id'=>$article->id]);?>"><?= $article->title?></a></h4>
+                            <ul class="post-status">
+                                <li><i class="fa fa-clock-o"></i><?= $article->getDate()?></li>
+                                <li>
+                                    <i class="fa fa-folder-open-o"></i>
+                                    <a href="<?= Url::toRoute(['site/category', 'id'=>$article->category->id]);?>" title="Увидеть болше публикаций в категории <?= $article->category->title;?>" rel="category"><?= $article->category->title;?></a>
+                                </li>
+                                <li><i class="fa fa-comment-o"></i>No Comments</li>
+                            </ul>
+                            <div class="clear"></div>
+                </div>
+                <div class="featured-image">
+                    <img src="<?= $article->getImage()?>" class="attachment-post-standard "/> 
+                </div>
+                <div class="post-margin">
+                    <p><?= $article->description?></p>
+                    
+                    <div class="text-center text-uppercase">
+                        <a href="<?= Url::toRoute(['site/single', 'id'=>$article->id]);?>" class="fa">Продолжить чтение</a>
+                    </div>
+                </div>
 
-    <div class="body-content">
-
-        <div class="row">
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
+                <ul class="post-social">
+                    <li><a href="#" class="readmore">Узнать больше<i class="fa fa-arrow-circle-o-right"></i></a></li>
+                    <li><a href="#" target="_blank"><i class="fa fa-facebook"></i></a></li>
+                    <li><a href="#" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                    <li><a href="#" target="_blank"><i class="fa fa-google-plus"></i></a></li><li><a href="#" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+                </ul>
+                <div class="clear"></div>
             </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
+            <!-- End Post Item -->
+            <?php endforeach;?>
 
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
+            <!-- Start Pagination -->
+            <?php        
+            echo LinkPager::widget(['pagination' => $pagination,]);
+            ?>
+            <!-- End Pagination -->
 
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
-            </div>
+            <div class="clear"></div>
         </div>
-
     </div>
+   <!-- End Posts Container -->
+
+   <!-- Start Sidebar -->
+    <?= $this->render('/partials/sidebar', [
+            'popular'=>$popular,
+            'recent'=>$recent,
+            'categories'=>$categories
+   ]);?>        
+   <!-- End Sidebar -->
+    <div class="clear"></div>
 </div>

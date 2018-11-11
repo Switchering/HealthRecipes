@@ -1,18 +1,23 @@
-<?php
+    <!-- Start Main Container -->
+    <div class="container zerogrid">
+        
+    <div class="col-full page-conainer">
+	<div class="wrap-col">
+    <div class="post-margin">
+    <h5 class="page-title">About us</h5>
+    
+    <!-- Start Entry -->
+    <p>Morbi vitae urna pellentesque, placerat nibh id, mollis nibh. Integer massa tellus, luctus a tortor ut, auctor sagittis nisi. Donec ullamcorper quam et venenatis tempus. Nulla sollicitudin dui in cursus congue. Vestibulum eget dui mauris. Maecenas non rhoncus lorem. Donec id augue condimentum, elementum ligula et, condimentum ipsum.</p>
 
-/* @var $this yii\web\View */
 
-use yii\helpers\Html;
-
-$this->title = 'About';
-$this->params['breadcrumbs'][] = $this->title;
-?>
-<div class="site-about">
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        This is the About page. You may modify the following file to customize its content:
-    </p>
-
-    <code><?= __FILE__ ?></code>
-</div>
+<div class="symple-clear-floats"></div>
+    <!-- End Entry -->
+    
+    </div>
+	</div>
+    </div>
+    
+    <div class="clear"></div>
+        </div>
+	<!-- End Main Container -->
+	
