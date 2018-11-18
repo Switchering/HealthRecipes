@@ -2,42 +2,29 @@
 use yii\helpers\Url;
 use yii\widgets\LinkPager;
 ?>
-<!--main content start-->
-<div class="container zerogrid">
-    <div class="list_carousel">
-        <ul id="featured-posts">
+
+<!-- SECTION -->
+<div class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
             <?php foreach($categories as $category):?>
-                <li class="first carousel-item">
-                    <div class="post-margin">
-                        <h6><a href="<?= Url::toRoute(['site/category', 'id'=>$category->id]);?>"><?= $category->title?></a></h6>
+                <div class="col-md-4">
+                    <div class="section-title">
+                        <h2 class="title"><a href="<?= Url::toRoute(['site/category', 'id'=>$category->id]);?>"</a><?= $category->title?></h2>
                     </div>
-                    <div class="featured-image">
-                        <img width="200" height="130" src="<?= $category->getImage()?>"/>                
-                        <div class="post-icon">
-                            <span class="fa-stack fa-lg">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-picture-o fa-stack-1x fa-inverse"></i>                    
-                            </span>
-                        </div>
-                    </div>    
-<!--                    <div class="post-margin">
-                        <p>JjhgjhgkjhgkjhghjkghgkhjgkjhgJjhgjhgkjhgkjhghjkghgkhjgkjhgJjhgjhgkjhgkjhghjkghgkhjgkjhgJjhgjhgkjhgkjhghjkghgkhjgkjhg</p>
-                    </div>-->
-                </li>
+                    <!-- post -->
+                    <div class="post">
+                        <a class="post-img" href="<?= Url::toRoute(['site/category', 'id'=>$category->id]);?>"><img src="<?= $category->getImage()?>" alt=""></a>
+   
+                    </div>
+                    <!-- /post -->
+                </div>
             <?php endforeach;?>
-        </ul>
+        </div>
+        <!-- /row -->
     </div>
-                <?php
-//                echo LinkPager::widget([
-//                    'pagination' => $pagination,
-//                ]);
-                ?>
+    <!-- /container -->
 </div>
-            <?
-//                $this->render('/partials/sidebar', [
-//                'popular'=>$popular,
-//                'recent'=>$recent,
-//                'categories'=>$categories
-//            ]);
-            ?>
-<!-- end main content-->
+<!-- /SECTION -->

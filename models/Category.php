@@ -84,7 +84,12 @@ class Category extends \yii\db\ActiveRecord
         return $categories;
     }
     
-    public static function getArticlesByCategory($id)
+    public function getPopular()
+    {
+        //return Categry::find()->orderBy('viewed desc')->limit(3)->all();
+    }
+
+        public static function getArticlesByCategory($id)
     {
         // build a DB query to get all articles
         $query = Article::find()->where(['category_id'=>$id])->orderBy('date desc');

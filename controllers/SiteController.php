@@ -12,6 +12,7 @@ use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\Article;
 use app\models\Category;
+use app\models\CommentForm;
 
 
 class SiteController extends Controller
@@ -102,13 +103,28 @@ class SiteController extends Controller
         $article= Article::findOne($id);
         $popular = Article::getPopular();
         $recent = Article::getRecent();
+        $related = Article::getRelated($id);
+        $previous = Article::getPrevious($id);
+        $next = Article::getNext($id);
         $categories = Category::getAll();
+        $tags = $article->getSelectedTags();
+        $comments = $article->getArticleComments();
+        $commentForm = new CommentForm();
+        $commentcount = $article->getCommentsCount();
+        $article->viewedCounter();
         
         return $this->render('single',[
+            'commentcount'=>$commentcount,
             'article'=>$article,
             'popular'=>$popular,
             'recent'=>$recent,
-            'categories'=>$categories
+            'related'=>$related,
+            'previous'=>$previous,
+            'next'=>$next,
+            'categories'=>$categories,
+            'tags'=>$tags,
+            'comments'=>$comments,
+            'commentForm'=>$commentForm
         ]);
     }
     
@@ -134,5 +150,20 @@ class SiteController extends Controller
             'recent'=>$recent,
             'categories'=>$categories
         ]);
+    }
+    
+    public function actionComment($id)
+    {
+        $model = new CommentForm();
+        
+        if(Yii::$app->request->isPost)
+        {
+            $model->load(Yii::$app->request->post());
+            if($model->saveComment($id))
+            {
+                Yii::$app->getSession()->setFlash('comment','Ваш комментарий скоро будет добавлен');
+                return $this->redirect(['site/single','id'=>$id]);
+            }
+        }
     }
 }

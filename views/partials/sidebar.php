@@ -3,62 +3,42 @@ use yii\widgets\LinkPager;
 use yii\helpers\Url;
 ?>
 <!-- Start Sidebar -->
-    <div class="col-1-3">
-        <div class="wrap-col">
-            <div class="widget-container">
-                <form role="search" method="get" id="searchform" class="searchform" action="">
-                    <div>
-                        <label class="screen-reader-text" for="s">Search for:</label>
-                        <input type="text" value="" name="s" id="s" />
-                        <input type="submit" id="searchsubmit" value="Search" />
-                    </div>
-                </form>
-                <div class="clear"></div>      
+<!-- category  -->
+ <div class="aside-widget">
+    <div class="section-title">
+        <h2 class="title">Категории</h2>
+    </div>
+    <div class="category-widget">
+        <ul>
+            <?php foreach ($categories as $category):?>
+                <li>
+                    <a href="<?= Url::toRoute(['site/category','id'=>$category->id]);?>" title="Увидеть больше публикаций в категории"><?= $category->title?>
+                        <span><?= $category->getArticlesCount();?></span>
+                    </a>
+                </li>
+            <?php endforeach;?>
+        </ul>
+    </div>
+</div>
+<!-- /category -->
+<!-- popular post -->
+<div class="aside-widget">
+    <div class="section-title">
+        <h2 class="title">Популярные публикации</h2>
+    </div>
+    <!-- post -->
+    <?php foreach ($popular as $article):?>
+    <div class="post post-widget">
+        <a class="post-img" href="<?= Url::toRoute(['site/single', 'id'=>$article->id]);?>"><img src="<?= $article->getImage()?>" alt=""></a>
+        <div class="post-body">
+            <div class="post-category">
+                <a href="<?= Url::toRoute(['site/category', 'id'=>$article->category->id]);?>"><?= $article->category->title;?></a>
             </div>
-            <div class="widget-container"><h6 class="widget-title">Категории</h6>		
-                <ul>
-                    <?php foreach ($categories as $category):?>
-                    <li class="cat-item cat-item-5">
-                        <a href="<?= Url::toRoute(['site/category', 'id'=>$category->id]);?>" title="Увидеть болше публикаций в категории"><?= $category->title?></a>
-                        <span>(<?= $category->getArticlesCount();?>)</span>
-                    </li>
-                    <?php endforeach;?>
-                </ul>
-            <div class="clear"></div>
-            </div>
-            <div class="widget-container"><h6 class="widget-title">Последние публикации</h6>
-                <ul class="widget-recent-posts">  
-                    <?php foreach ($recent as $article):?>
-                    <li>
-                        <div class="post-image">
-                            <div class="post-mask"></div>
-                            <img width="70" height="70" src="<?= $article->getImage()?>" class="attachment-post-widget #"  />                
-                        </div>
-                        <h6><a href="<?= Url::toRoute(['site/single', 'id'=>$article->id]);?>"><?= $article->title?></a></h6>
-                        <span><?= $article->getDate()?></span>
-                        <div class="clear"></div>
-                    </li>
-                    <?php endforeach;?>
-                </ul>
-            <div class="clear"></div>
-            </div>    
-            <div class="clear"></div>
-            <div class="widget-container"><h6 class="widget-title">Самые популярные</h6>
-                <ul class="widget-recent-posts">  
-                    <?php foreach ($popular as $article):?>
-                    <li>
-                        <div class="post-image">
-                            <div class="post-mask"></div>
-                            <img width="70" height="70" src="<?= $article->getImage()?>" class="attachment-post-widget #"  />                
-                        </div>
-                        <h6><a href="<?= Url::toRoute(['site/single', 'id'=>$article->id]);?>"><?= $article->title?></a></h6>
-                        <span><?= $article->getDate()?></span>
-                        <div class="clear"></div>
-                    </li>
-                    <?php endforeach;?>
-                </ul>
-                <div class="clear"></div>
-           </div> 
+            <h3 class="post-title"><a href="<?= Url::toRoute(['site/single', 'id'=>$article->id]);?>"><?= $article->title?></a></h3>
         </div>
-    </div>        
-   <!-- End Sidebar -->
+    </div>
+    <?php endforeach;?>
+    <!-- /post -->
+</div>
+<!-- /post widget -->
+<!-- End Sidebar -->

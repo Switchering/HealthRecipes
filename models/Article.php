@@ -68,7 +68,7 @@ class Article extends \yii\db\ActiveRecord
     public function saveArticle()
     {
         $this->user_id = Yii::$app->user->id;
-        return $this->save(false);
+        return $this->save();
     }
     
     public function saveImage($filename) 
@@ -105,15 +105,14 @@ class Article extends \yii\db\ActiveRecord
      $category = Category::findOne($category_id);
      if ($category != null)
      {
-      $this->link('category', $category);   
-      return true;
+        $this->link('category', $category);   
+        return true;
      }
     }
     
     public function getTags() 
     {
-        return $this->hasMany(Tag::className(), ['id'=>'tag_id'])
-                ->viaTable('article_tag', ['article_id'=>'id']);
+        return $this->hasMany(Tag::className(), ['id'=>'tag_id'])->viaTable('article_tag', ['article_id'=>'id']);
     }
     
     public function getSelectedTags() 
@@ -126,7 +125,6 @@ class Article extends \yii\db\ActiveRecord
     {
         if (is_array($tags))
         {
-
             foreach($tags as $tag_id)
             {
                 $tag = Tag::findOne($tag_id);
@@ -174,13 +172,61 @@ class Article extends \yii\db\ActiveRecord
         return Article::find()->orderBy('date desc')->limit(3)->all();
     }
     
+    public static function getRelated($id)
+    {
+        $article = Article::findOne($id);
+        return Article::find()->where(['user_id'=>$article->user_id])->limit(3)->all();
+    }
+    
+    public static function getPrevious($id)
+    {
+        $article = Article::find()->where(['id'=>($id-1)])->one();
+        if($article!=null)
+        {
+            return $article;
+        }
+        else
+        {
+            $article = Article::find()->orderBy('viewed desc')->one();
+            return $article;
+        }
+    }
+    
+    public static function getNext($id)
+    {
+        $article = Article::find()->where(['id'=>($id+1)])->one();
+        if($article != null)
+        {
+            return $article;
+        }
+        else
+        {
+            $article = Article::find()->orderBy('viewed asc')->one();
+            return $article;
+        }
+    }
+
     public function getComments()
     {
         return $this->hasMany(Comment::className(), ['article_id'=>'id']);
     }
+    
     public function getArticleComments()
     {
         return $this->getComments()->where(['status'=>1])->all();
+    }
+    
+    public function getCommentsCount() 
+    {
+        return $this->getComments()->where(['status'=>1])->count();
+//        if($count !=null)
+//        {
+//            return $count;
+//        }
+//        else
+//        {
+//            return 0;
+//        }
     }
     
     public function getAuthor()

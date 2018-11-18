@@ -42,17 +42,18 @@ AppAsset::register($this);
             ['label' => 'Статьи', 'url' => ['/admin/article/index']],
             ['label' => 'Категории', 'url' => ['/admin/category/index']],
             ['label' => 'Тэги', 'url' => ['/admin/tag/index']],
+            ['label' => 'Комментарии', 'url' => ['/admin/comment/index']],
         ],
     ]);
     NavBar::end();
     ?>
 
-    <div class="container">
+    <div style="margin-top: 20px">
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
         <?= Alert::widget() ?>
-        <?= $content ?>
+        <?= $content ?> 
     </div>
 </div>
 
@@ -65,6 +66,14 @@ AppAsset::register($this);
 </footer>
 
 <?php $this->endBody() ?>
+<?php $this->registerJsFile('/ckeditor/ckeditor.js');?>
+<?php $this->registerJsFile('/ckfinder/ckfinder.js');?>
+    <script>
+    $(document).ready(function(){
+        var editor = CKEDITOR.replaceAll();
+        CKFinder.setupCKEditor(editor);
+    })
+    </script>
 </body>
 </html>
 <?php $this->endPage() ?>

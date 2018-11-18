@@ -7,12 +7,12 @@ use yii\widgets\ActiveForm;
 /* @var $model app\models\Article */
 /* @var $form yii\widgets\ActiveForm */
 ?>
-
+$this->title = $model->title;
 <div class="article-form">
 
     <?php $form = ActiveForm::begin(); ?>
-
-    <?= Html::dropDownList('tags',$selectedTags, $tags,['class'=>'form-control','multiple'=>true]) ?>
+    <h1><?= Html::encode($this->title) ?></h1>
+    <?= Html::checkboxList('tags',$selectedTags, $tags,['class'=>'form-control','multiple'=>true]) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Выбрать', ['class' => 'btn btn-success']) ?>
