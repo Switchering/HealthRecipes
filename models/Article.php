@@ -118,6 +118,7 @@ class Article extends \yii\db\ActiveRecord
     public function getSelectedTags() 
     {
         $selectedIds = $this->getTags()->select('id')->asArray()->all();
+        
         return ArrayHelper::getColumn($selectedIds, 'id');
     }
     

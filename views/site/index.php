@@ -1,5 +1,5 @@
 <?php
-use yii\widgets\LinkPager;
+use app\widgets\Pager;
 use yii\helpers\Url;
 ?>
 
@@ -33,10 +33,12 @@ use yii\helpers\Url;
             <div class="section-row loadmore text-center">
                 <!-- Start Pagination -->
                 <?php        
-                    echo LinkPager::widget(['pagination' => $pagination,]);
+                    echo Pager::widget([
+                        'pagination' => $pagination,
+                        'maxButtonCount' => 2
+                        ]);
                 ?>
                 <!-- End Pagination -->
-                <a href="#" class="primary-button">Load More</a>
             </div>
         </div>
         <div class="col-md-4">

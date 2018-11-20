@@ -12,8 +12,11 @@ use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\Article;
 use app\models\Category;
-use app\models\CommentForm;
+use app\models\Tag;
+use app\models\CommentForm;        
 
+Yii::$app->view->params['categories'] = Category::getAll(3);
+Yii::$app->view->params['tags'] = Tag::getAll(8);
 
 class SiteController extends Controller
 {
@@ -84,10 +87,10 @@ class SiteController extends Controller
     
     public function actionIndex()
     {
-        $data = Article::getAll(5);
+        $data = Article::getAll();
         $popular = Article::getPopular();
         $recent = Article::getRecent();
-        $categories = Category::getAll();
+        $categories = Category::getAll(0);
         
         return $this->render('index',[
             'articles'=>$data['articles'],
@@ -106,8 +109,8 @@ class SiteController extends Controller
         $related = Article::getRelated($id);
         $previous = Article::getPrevious($id);
         $next = Article::getNext($id);
-        $categories = Category::getAll();
-        $tags = $article->getSelectedTags();
+        $categories = Category::getAll(0);
+        $tags = $article->tags;
         $comments = $article->getArticleComments();
         $commentForm = new CommentForm();
         $commentcount = $article->getCommentsCount();
@@ -130,7 +133,7 @@ class SiteController extends Controller
     
     public function actionCategories() 
     {
-        $categories = Category::getAll();
+        $categories = Category::getAll(0);
         return $this->render('categories',[
             'categories'=>$categories
         ]);
@@ -138,12 +141,14 @@ class SiteController extends Controller
     
     public function actionCategory($id)
     {
+        $category = Category::findOne($id);
         $data = Category::getArticlesByCategory($id);
         $popular = Article::getPopular();
         $recent = Article::getRecent();
-        $categories = Category::getAll();
+        $categories = Category::getAll(0);
         
         return $this->render('category',[
+            'category' => $category,
             'articles'=>$data['articles'],
             'pagination'=>$data['pagination'],
             'popular'=>$popular,
@@ -165,5 +170,21 @@ class SiteController extends Controller
                 return $this->redirect(['site/single','id'=>$id]);
             }
         }
+    }
+    
+    public function actionTag($id)
+    {
+        $tag = Tag::findOne($id);
+        $articles = $tag->articles;
+        $popular = Article::getPopular();
+        $recent = Article::getRecent();
+        $categories = Category::getAll(0);
+        
+        return $this->render('tag',[
+            'articles'=>$articles,
+            'popular'=>$popular,
+            'recent'=>$recent,
+            'categories'=>$categories
+        ]);
     }
 }

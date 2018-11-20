@@ -5,7 +5,11 @@ use app\models\LoginForm;
 use Yii;
 use yii\web\Controller;
 use app\models\User;
+use app\models\Category;
 use app\models\SignupForm;
+
+
+Yii::$app->view->params['categories'] = Category::getAll(3);
 
 class AuthController extends Controller
 {

@@ -2,6 +2,8 @@
 use yii\widgets\LinkPager;
 use yii\helpers\Url;
 ?>
+
+<script type="text/javascript" src="https://vk.com/js/api/openapi.js?159"></script>
 <!-- Start Sidebar -->
 <!-- category  -->
  <div class="aside-widget">
@@ -24,7 +26,7 @@ use yii\helpers\Url;
 <!-- popular post -->
 <div class="aside-widget">
     <div class="section-title">
-        <h2 class="title">Популярные публикации</h2>
+        <h2 class="title">Популярное</h2>
     </div>
     <!-- post -->
     <?php foreach ($popular as $article):?>
@@ -41,4 +43,16 @@ use yii\helpers\Url;
     <!-- /post -->
 </div>
 <!-- /post widget -->
+
+<!-- VK widget -->
+<div class="aside-widget">
+    <div class="section-title">
+        <h2 class="title">ВКОНТАКТЕ</h2>
+    </div>
+    <div id="vk_groups" class="post post-widget"></div>
+        <script type="text/javascript">
+            VK.Widgets.Group("vk_groups", {mode: 3 , width: "auto" , height: "400",no_cover: 1 }, 35363834);
+        </script>
+</div>
+<!-- /VK widget -->
 <!-- End Sidebar -->
