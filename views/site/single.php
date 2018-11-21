@@ -1,8 +1,10 @@
   <?php
 use yii\helpers\Url;
-use app\models\Tag;
+$this->title = $article->title;
 ?>
+
 <!-- section -->
+
 <!-- PAGE HEADER -->
 <div id="post-header" class="page-header">
     <div class="page-header-bg" style="background-image: url('<?= $article->getImage()?>');" data-stellar-background-ratio="0.5"></div>
@@ -50,6 +52,7 @@ use app\models\Tag;
                     <!-- post tags -->
                     <div class="section-row">
                         <div class="post-tags">
+                            <script> $(document).ready(function() { alert('jQuery работает'); }); </script>
                             <ul>
                                 <li>ТЭГИ:</li>
                                 <?php foreach ($tags as $tag):?>
@@ -100,7 +103,6 @@ use app\models\Tag;
                         </div>
                     </div>
                     <!-- /post author -->
-
                     <!-- /related post -->
                     <div>
                         <div class="section-title">
@@ -151,4 +153,5 @@ use app\models\Tag;
     </div>
     <!-- /container -->
 </div>
+
 <!-- /SECTION -->

@@ -7,8 +7,9 @@ use yii\web\Controller;
 use app\models\User;
 use app\models\Category;
 use app\models\SignupForm;
+use app\models\Tag;
 
-
+Yii::$app->view->params['tags'] = Tag::getAll(8);
 Yii::$app->view->params['categories'] = Category::getAll(3);
 
 class AuthController extends Controller

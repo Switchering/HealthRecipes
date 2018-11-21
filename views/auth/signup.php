@@ -10,37 +10,44 @@ use yii\bootstrap\ActiveForm;
 $this->title = 'Регистрация';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="container zerogrid">
-    <div class="site-login">
-        <h1><?= Html::encode($this->title) ?></h1>
+<div class="section">
+    <!-- container -->
+    <div class="container">
+        <div class="col-md-10">
+            <h1><?= Html::encode($this->title) ?></h1>
 
-        <p>Пожалуйста заполните поля:</p>
+            <p>Пожалуйста заполните поля:</p>
 
-        <?php $form = ActiveForm::begin([
-            'id' => 'login-form',
-            'layout' => 'horizontal',
-            'fieldConfig' => [
-                'template' => "{label}\n<div class=\"col-lg-3\">{input}</div>\n<div class=\"col-lg-8\">{error}</div>",
-                'labelOptions' => ['class' => 'col-lg-1 control-label'],
-            ],
-        ]); ?>
-            <?= $form->field($model, 'name')->textInput(['autofocus' => true]) ?>
+            <?php $form = ActiveForm::begin([
+                'id' => 'login-form',
+                'layout' => 'horizontal',
+                'fieldConfig' => [
+                    'template' => "{label}\n<div class=\"col-lg-3\">{input}</div>\n<div class=\"col-lg-8\">{error}</div>",
+                    'labelOptions' => ['class' => 'col-lg-1 control-label'],
+                ],
+            ]); ?>
+                <?= $form->field($model, 'name')->textInput(['autofocus' => true])->label('Логин') ?>
 
-            <?= $form->field($model, 'email')->textInput() ?>
+                <?= $form->field($model, 'email')->textInput() ?>
 
-            <?= $form->field($model, 'password')->passwordInput() ?>
+                <?= $form->field($model, 'password')->passwordInput()->label('Пароль') ?>
 
-            <div class="form-group">
-                <div class="col-lg-offset-1 col-lg-11">
-                    <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+                <div class="form-group">
+                    <div class="col-lg-offset-1 col-lg-11">
+                        <?= Html::submitButton('Зарегистрироваться', ['class' => 'primary-button', 'name' => 'login-button']) ?>
+                    </div>
                 </div>
-            </div>
 
-        <?php ActiveForm::end(); ?>
-
-        <div class="col-lg-offset-1" style="color:#999;">
-            You may login with <strong>admin/admin</strong> or <strong>demo/demo</strong>.<br>
-            To modify the username/password, please check out the code <code>app\models\User::$users</code>.
+            <?php ActiveForm::end(); ?>
         </div>
+        <div class="col-md-2">
+            <script type="text/javascript" src="https://vk.com/js/api/openapi.js?159"></script>
+            <script type="text/javascript">VK.init({apiId: 6748665});</script>
+                <!-- VK Widget -->
+                <div id="vk_auth"></div>
+                <script type="text/javascript">
+                    VK.Widgets.Auth("vk_auth", {"authUrl":"/auth/login-vk"});
+                </script>
+            </div>
     </div>
 </div>

@@ -52,6 +52,17 @@ $config = [
             'showScriptName' => false,
             'enableStrictParsing' => false,
             'rules' => [
+                [
+                    'pattern'=>'/',
+                    'route' => 'site/index',
+                    'suffix' => '',
+                ],
+                [
+                    'pattern'=>'about',
+                    'route' => 'site/about',
+                    'suffix' => '.html',
+                ],
+                '<action:\w+>' => 'site/<action>',
             ],
         ],
     ],

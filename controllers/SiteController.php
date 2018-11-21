@@ -62,28 +62,28 @@ class SiteController extends Controller
         ];
     }
 
-    public function actionContact()
-    {
-        $model = new ContactForm();
-        if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
-            Yii::$app->session->setFlash('contactFormSubmitted');
-
-            return $this->refresh();
-        }
-        return $this->render('contact', [
-            'model' => $model,
-        ]);
-    }
+//    public function actionContact()
+//    {
+//        $model = new ContactForm();
+//        if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
+//            Yii::$app->session->setFlash('contactFormSubmitted');
+//
+//            return $this->refresh();
+//        }
+//        return $this->render('contact', [
+//            'model' => $model,
+//        ]);
+//    }
 
     /**
      * Displays about page.
      *
      * @return string
      */
-    public function actionAbout()
-    {
-        return $this->render('about');
-    }
+//    public function actionAbout()
+//    {
+//        return $this->render('about');
+//    }
     
     public function actionIndex()
     {
@@ -181,6 +181,7 @@ class SiteController extends Controller
         $categories = Category::getAll(0);
         
         return $this->render('tag',[
+            'tag'=>$tag,
             'articles'=>$articles,
             'popular'=>$popular,
             'recent'=>$recent,

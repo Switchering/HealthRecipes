@@ -1,13 +1,9 @@
 <?php
-use app\widgets\Alert;
+use yii\app;
 use yii\helpers\Html;
-use yii\bootstrap\Nav;
-use yii\bootstrap\NavBar;
-use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
 use yii\helpers\Url;
-use rmrevin\yii\fontawesome\FontAwesome;
-
+$this->registerLinkTag(['rel' => 'icon', 'type' => 'image/ico', 'href' => Url::to(['images/favicon.ico'])]);
 AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
@@ -20,7 +16,7 @@ AppAsset::register($this);
 
         <?= Html::csrfMetaTags() ?>
         <title><?= Html::encode($this->title) ?></title>
-
+        
         <?php $this->head() ?>
     </head>
 
@@ -35,21 +31,21 @@ AppAsset::register($this);
                     <div class="container">
                         <!-- social -->
                         <ul class="nav-social">
-                            <li><a href=""><i class="fa fa-vk"></i></a></li>
-                            <li><a href="#"><i class="fa fa-telegram"></i></a></li>
-                            <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                            <li><a href="https://vk.com/vkhealthrecipes"><i class="fa fa-vk"></i></a></li>
+<!--                            <li><a href="#"><i class="fa fa-telegram"></i></a></li>
+                            <li><a href="#"><i class="fa fa-instagram"></i></a></li>-->
                         </ul>
                         <!-- /social -->
 
                         <!-- logo -->
                         <div class="nav-logo">
-                            <a href="/" class="logo"><img src="/images/logo.jpg" alt=""></a>
+                            <a href="/" class="logo"><img src="/images/logo.png" alt=""></a>
                         </div>
                         <!-- /logo -->
                         <!-- search & aside toggle -->
                         <div class="nav-btns">
                             <button class="aside-btn"><i class="fa fa-bars"></i></button>
-                            <button class="search-btn"><i class="fa fa-search"></i></button>
+<!--                            <button class="search-btn"><i class="fa fa-search"></i></button>
                             <div id="nav-search">
                                 <form>
                                     <input class="input" name="search" placeholder="Enter your search...">
@@ -57,7 +53,7 @@ AppAsset::register($this);
                                 <button class="nav-close search-close">
                                     <span></span>
                                 </button>
-                            </div>
+                            </div>-->
                             <?php if(Yii::$app->user->isGuest):?>
                             <a class="signin-button" href="<?= Url::toRoute(['auth/login'])?>">Вход</a>
                             <a class="signin-button" href="<?= Url::toRoute(['auth/signup'])?>">Регистрация</a>
@@ -80,7 +76,7 @@ AppAsset::register($this);
                                         <div class="dropdown-body">
                                             <ul class="dropdown-list">
                                                 <li><a href="/site/categories">Категории</a></li>
-                                                <li><a href="/site/about">О нас</a></li>
+                                                <!--<li><a href="/site/about">О нас</a></li>-->
                                             </ul>
 
                                         </div>
@@ -97,19 +93,16 @@ AppAsset::register($this);
                 <!-- Aside Nav -->
                 <div id="nav-aside">
                     <ul class="nav-aside-menu">
-                        <li><a href="index.html">Home</a></li>
-                        <li class="has-dropdown"><a>Categories</a>
+                        <li><a href="/">Главная</a></li>
+                        <li class="has-dropdown"><a>Категории</a>
                             <ul class="dropdown">
-                                <li><a href="#">Lifestyle</a></li>
-                                <li><a href="#">Fashion</a></li>
-                                <li><a href="#">Technology</a></li>
-                                <li><a href="#">Travel</a></li>
-                                <li><a href="#">Health</a></li>
+                                <li><a href="site/categories">Все</a></li>
+                                <?php foreach ($this->params['categories'] as $category):?>
+                                    <li><a href="<?= Url::toRoute(['site/category','id'=>$category->id])?>"><?= $category->title?></a></li>
+                                <?php endforeach;?>
                             </ul>
                         </li>
-                        <li><a href="about.html">About Us</a></li>
-                        <li><a href="contact.html">Contacts</a></li>
-                        <li><a href="#">Advertise</a></li>
+                        <!--<li><a href="about.html">О нас</a></li>-->
                     </ul>
                     <button class="nav-close nav-aside-close"><span></span></button>
                 </div>
@@ -129,13 +122,13 @@ AppAsset::register($this);
                     <div class="col-md-3">
                         <div class="footer-widget">
                             <div class="footer-logo">
-                                <a href="index.html" class="logo"><img src="/images/logo.jpg" alt=""></a>
+                                <a href="index.html" class="logo"><img src="/images/logo-alt.png" alt=""></a>
                             </div>
                             <p>.</p>
                             <ul class="contact-social">
-                                <li><a href="#" class="social-vk"><i class="fa fa-vk"></i></a></li>
-                                <li><a href="#" class="social-telegram"><i class="fa fa-telegram"></i></a></li>
-                                <li><a href="#" class="social-instagram"><i class="fa fa-instagram"></i></a></li>
+                                <li><a href="https://vk.com/vkhealthrecipes" class="social-vk"><i class="fa fa-vk"></i></a></li>
+<!--                                <li><a href="#" class="social-telegram"><i class="fa fa-telegram"></i></a></li>
+                                <li><a href="#" class="social-instagram"><i class="fa fa-instagram"></i></a></li>-->
                             </ul>
                         </div>
                     </div>

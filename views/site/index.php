@@ -1,6 +1,8 @@
 <?php
 use app\widgets\Pager;
 use yii\helpers\Url;
+
+$this->title = 'HealthRecipes';
 ?>
 
 

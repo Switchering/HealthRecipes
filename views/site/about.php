@@ -1,23 +1,51 @@
-    <!-- Start Main Container -->
-    <div class="container zerogrid">
-        
-    <div class="col-full page-conainer">
-	<div class="wrap-col">
-    <div class="post-margin">
-    <h5 class="page-title">About us</h5>
-    
-    <!-- Start Entry -->
-    <p>Morbi vitae urna pellentesque, placerat nibh id, mollis nibh. Integer massa tellus, luctus a tortor ut, auctor sagittis nisi. Donec ullamcorper quam et venenatis tempus. Nulla sollicitudin dui in cursus congue. Vestibulum eget dui mauris. Maecenas non rhoncus lorem. Donec id augue condimentum, elementum ligula et, condimentum ipsum.</p>
+<?php
+use app\widgets\Pager;
+use yii\helpers\Url;
 
-
-<div class="symple-clear-floats"></div>
-    <!-- End Entry -->
-    
-    </div>
-	</div>
-    </div>
-    
-    <div class="clear"></div>
+$this->title = 'О нас';
+?>
+<!-- PAGE HEADER -->
+<div class="page-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-offset-1 col-md-10 text-center">
+                <h1 class="text-uppercase">О нас</h1>
+                <p class="lead"></p>
+            </div>
         </div>
-	<!-- End Main Container -->
-	
+    </div>
+</div>
+<!-- /PAGE HEADER -->
+<!-- SECTION -->
+<div class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+            <div class="col-md-5">
+                <div class="section-row">
+                    <div class="section-title">
+                        <h2 class="title">Our story</h2>
+                    </div>
+                    <p></p>
+                    <blockquote class="blockquote">
+                        <p></p>
+                        <footer class="blockquote-footer"></footer>
+                    </blockquote>
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="section-row">
+                        <div class="section-title">
+                                <h2 class="title">Our Vision</h2>
+                        </div>
+                        <p></p>
+                        <p></p>
+                </div>
+            </div>
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+<!-- /SECTION -->

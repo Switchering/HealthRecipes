@@ -2,6 +2,7 @@
 use yii\widgets\LinkPager;
 use yii\helpers\Url;
 use app\widgets\Pager;
+$this->title = $tag->title;
 ?>
 
 <div class="section">
