@@ -12,7 +12,7 @@ class Module extends \yii\base\Module
     /**
      * {@inheritdoc}
      */
-    public $layout = '/admin';
+    public $layout = '/admin/main';
     public $controllerNamespace = 'app\modules\admin\controllers';
 
     /**
@@ -24,8 +24,8 @@ class Module extends \yii\base\Module
 
         // custom initialization code goes here
     }
-    
-    public function behaviors() 
+
+    public function behaviors()
     {
         return [
             'access' =>[

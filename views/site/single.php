@@ -7,7 +7,7 @@ $this->title = $article->title;
 
 <!-- PAGE HEADER -->
 <div id="post-header" class="page-header">
-    <div class="page-header-bg" style="background-image: url('<?= $article->getImage()?>');" data-stellar-background-ratio="0.5"></div>
+    <div class="page-header-bg" style="background-image: url('<?= $article->getImage()?>');"></div>
     <div class="container">
         <div class="row">
             <div class="col-md-10">
@@ -52,7 +52,6 @@ $this->title = $article->title;
                     <!-- post tags -->
                     <div class="section-row">
                         <div class="post-tags">
-                            <script> $(document).ready(function() { alert('jQuery работает'); }); </script>
                             <ul>
                                 <li>ТЭГИ:</li>
                                 <?php foreach ($tags as $tag):?>
@@ -84,7 +83,7 @@ $this->title = $article->title;
                     <!-- post author -->
                     <div class="section-row">
                         <div class="section-title">
-                                <h3 class="title">О <a href="#"><?=$article->author->name?></a></h3>
+                                <h3 class="title"><a href="#"><?=$article->author->name?></a></h3>
                         </div>
                         <div class="author media">
                             <div class="media-left">
@@ -93,11 +92,11 @@ $this->title = $article->title;
                                 </a>
                             </div>
                             <div class="media-body">
-                                <p style="color: red">Добавить описание в модель</p>
+                                <p><?=$article->author->about?></p>
                                 <ul class="author-social">
                                     <li><a href="#"><i class="fa fa-vk"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-telegram"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+<!--                                    <li><a href="#"><i class="fa fa-telegram"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-instagram"></i></a></li>-->
                                 </ul>
                             </div>
                         </div>

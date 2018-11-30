@@ -13,7 +13,6 @@ AppAsset::register($this);
         <meta charset="<?= Yii::$app->charset ?>">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
         <?= Html::csrfMetaTags() ?>
         <title><?= Html::encode($this->title) ?></title>
         
@@ -21,9 +20,11 @@ AppAsset::register($this);
     </head>
 
     <body>
+        
     <?php $this->beginBody() ?>
+
         <!-- HEADER -->
-        <header id="header">
+        <header>
             <!-- NAV -->
             <div id="nav">
                 <!-- Top Nav -->
@@ -56,6 +57,7 @@ AppAsset::register($this);
                             </div>-->
                             <?php if(Yii::$app->user->isGuest):?>
                             <a class="signin-button" href="<?= Url::toRoute(['auth/login'])?>">Вход</a>
+                            /
                             <a class="signin-button" href="<?= Url::toRoute(['auth/signup'])?>">Регистрация</a>
                             <?php else: ?>
                             <a class="signin-button" href="<?= Url::toRoute(['auth/logout'])?>">Выход (<?=Yii::$app->user->identity->name ?>)</a>
@@ -76,6 +78,7 @@ AppAsset::register($this);
                                         <div class="dropdown-body">
                                             <ul class="dropdown-list">
                                                 <li><a href="/site/categories">Категории</a></li>
+                                                <li><a href="/site/posts">Посты</a></li>
                                                 <!--<li><a href="/site/about">О нас</a></li>-->
                                             </ul>
 
@@ -124,7 +127,7 @@ AppAsset::register($this);
                             <div class="footer-logo">
                                 <a href="index.html" class="logo"><img src="/images/logo-alt.png" alt=""></a>
                             </div>
-                            <p>.</p>
+                            <p></p>
                             <ul class="contact-social">
                                 <li><a href="https://vk.com/vkhealthrecipes" class="social-vk"><i class="fa fa-vk"></i></a></li>
 <!--                                <li><a href="#" class="social-telegram"><i class="fa fa-telegram"></i></a></li>

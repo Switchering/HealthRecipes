@@ -25,7 +25,7 @@ $this->title = 'О нас';
             <div class="col-md-5">
                 <div class="section-row">
                     <div class="section-title">
-                        <h2 class="title">Our story</h2>
+                        <h2 class="title">Наша история</h2>
                     </div>
                     <p></p>
                     <blockquote class="blockquote">
@@ -37,7 +37,7 @@ $this->title = 'О нас';
             <div class="col-md-7">
                 <div class="section-row">
                         <div class="section-title">
-                                <h2 class="title">Our Vision</h2>
+                                <h2 class="title">Взгляды на мир</h2>
                         </div>
                         <p></p>
                         <p></p>

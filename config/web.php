@@ -6,6 +6,7 @@ $db = require __DIR__ . '/db.php';
 $config = [
     'language'=>'ru-RU',
     'id' => 'basic',
+    'name' => 'HealthRecipes',
     'charset'=>'utf-8',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
@@ -31,10 +32,22 @@ $config = [
         ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
-            // send all mails to a file by default. You have to set
-            // 'useFileTransport' to false and configure a transport
-            // for the mailer to send real emails.
-            'useFileTransport' => true,
+            'viewPath' => '@app/modules/admin/views/mail', //Путь к шаблонам писем
+            'htmlLayout' => 'layouts/main-html', //макеты писем
+            'textLayout' => 'layouts/main-text',
+            'messageConfig' => [
+                'charset' => 'UTF-8',
+                'from' => ['HealthRecipes@yandex.ru' => 'HealthRecipes'], //email и имя отправителя
+            ],
+            'useFileTransport' => false,
+            'transport' => [
+                'class' => 'Swift_SmtpTransport',
+                'host' => 'smtp.yandex.ru',
+                'username' => 'HealthRecipes@yandex.ru',
+                'password' => 'HealthRecipes.biba',
+                'port' => '465',
+                'encryption' => 'ssl',
+            ],
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
@@ -46,7 +59,7 @@ $config = [
             ],
         ],
         'db' => require(__DIR__ . '/db.php'),
-        
+
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
@@ -66,13 +79,13 @@ $config = [
             ],
         ],
     ],
-    
+
     'modules' => [
         'admin' => [
             'class' => 'app\modules\admin\Module',
         ],
     ],
-    
+
     'params' => $params,
 ];
 

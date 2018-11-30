@@ -13,7 +13,8 @@ use app\models\ContactForm;
 use app\models\Article;
 use app\models\Category;
 use app\models\Tag;
-use app\models\CommentForm;        
+use app\models\CommentForm;
+use app\models\User;
 
 Yii::$app->view->params['categories'] = Category::getAll(3);
 Yii::$app->view->params['tags'] = Tag::getAll(8);
@@ -80,18 +81,19 @@ class SiteController extends Controller
      *
      * @return string
      */
-//    public function actionAbout()
-//    {
-//        return $this->render('about');
-//    }
-    
+
+    public function actionAbout()
+    {
+        return $this->render('about');
+    }
+
     public function actionIndex()
     {
         $data = Article::getAll();
         $popular = Article::getPopular();
         $recent = Article::getRecent();
-        $categories = Category::getAll(0);
-        
+        $categories = Category::getAll(2);
+
         return $this->render('index',[
             'articles'=>$data['articles'],
             'pagination'=>$data['pagination'],
@@ -100,8 +102,24 @@ class SiteController extends Controller
             'categories'=>$categories
         ]);
     }
-    
-    public function actionSingle($id) 
+
+    public function actionPosts()
+    {
+        $data = Article::getAll();
+        $popular = Article::getPopular();
+        $recent = Article::getRecent();
+        $categories = Category::getAll(0);
+
+        return $this->render('posts',[
+            'articles'=>$data['articles'],
+            'pagination'=>$data['pagination'],
+            'popular'=>$popular,
+            'recent'=>$recent,
+            'categories'=>$categories
+        ]);
+    }
+
+    public function actionSingle($id)
     {
         $article= Article::findOne($id);
         $popular = Article::getPopular();
@@ -115,7 +133,7 @@ class SiteController extends Controller
         $commentForm = new CommentForm();
         $commentcount = $article->getCommentsCount();
         $article->viewedCounter();
-        
+
         return $this->render('single',[
             'commentcount'=>$commentcount,
             'article'=>$article,
@@ -130,15 +148,15 @@ class SiteController extends Controller
             'commentForm'=>$commentForm
         ]);
     }
-    
-    public function actionCategories() 
+
+    public function actionCategories()
     {
         $categories = Category::getAll(0);
         return $this->render('categories',[
             'categories'=>$categories
         ]);
     }
-    
+
     public function actionCategory($id)
     {
         $category = Category::findOne($id);
@@ -146,7 +164,7 @@ class SiteController extends Controller
         $popular = Article::getPopular();
         $recent = Article::getRecent();
         $categories = Category::getAll(0);
-        
+
         return $this->render('category',[
             'category' => $category,
             'articles'=>$data['articles'],
@@ -156,11 +174,11 @@ class SiteController extends Controller
             'categories'=>$categories
         ]);
     }
-    
+
     public function actionComment($id)
     {
         $model = new CommentForm();
-        
+
         if(Yii::$app->request->isPost)
         {
             $model->load(Yii::$app->request->post());
@@ -171,7 +189,7 @@ class SiteController extends Controller
             }
         }
     }
-    
+
     public function actionTag($id)
     {
         $tag = Tag::findOne($id);
@@ -179,9 +197,26 @@ class SiteController extends Controller
         $popular = Article::getPopular();
         $recent = Article::getRecent();
         $categories = Category::getAll(0);
-        
+
         return $this->render('tag',[
             'tag'=>$tag,
+            'articles'=>$articles,
+            'popular'=>$popular,
+            'recent'=>$recent,
+            'categories'=>$categories
+        ]);
+    }
+
+    public function actionAuthor($id)
+    {
+        $author = User::findOne($id);
+        $articles = $author->articles;
+        $popular = Article::getPopular();
+        $recent = Article::getRecent();
+        $categories = Category::getAll(0);
+
+        return $this->render('author',[
+            'author'=>$author,
             'articles'=>$articles,
             'popular'=>$popular,
             'recent'=>$recent,

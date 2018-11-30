@@ -17,7 +17,6 @@
                     <span class="time"><?= $comment->getDate();?></span>
                 </div>
                 <p><?= $comment->text; ?></p>
-                <a href="#" class="reply">Reply</a>
             </div>
         </div>
         <!-- /comment -->

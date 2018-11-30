@@ -34,7 +34,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return [
             [['isAdmin'], 'integer'],
-            [['name', 'email', 'password', 'photo'], 'string', 'max' => 255],
+            [['name', 'email', 'password', 'photo', 'about'], 'string', 'max' => 255],
         ];
     }
 
@@ -50,6 +50,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             'password' => 'Password',
             'isAdmin' => 'Is Admin',
             'photo' => 'Photo',
+            'about' => 'About',
         ];
     }
 
@@ -65,42 +66,47 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return User::findOne($id);
     }
-    
-    public function getId() 
+
+    public function getId()
     {
         return $this->id;
     }
-    
+
     public function getAuthKey()
     {
-        
+
     }
 
-    public function validateAuthKey($authKey) 
+    public function validateAuthKey($authKey)
     {
-        
+
     }
 
     public static function findIdentityByAccessToken($token, $type = null)
     {
-        
+
     }
-    
+
+    public static function findByName($name)
+    {
+        return User::find()->where(['name'=>$name])->one();
+    }
+
     public static function findByEmail($email)
     {
         return User::find()->where(['email'=>$email])->one();
     }
-    
+
     public function validatePassword($password)
     {
         return ($this->password == $password) ? true:false;
     }
-    
+
     public function create()
     {
         return $this->save(false);
     }
-    
+
     public function saveFromVk($uid, $name, $photo)
     {
         $user = User::findOne($uid);
@@ -112,13 +118,36 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
         $this->name = $name;
         $this->photo = $photo;
         $this->create();
-        
+
         Yii::$app->user->login($this);
     }
-    
-        public function getImage() 
-    {    
+
+    public function getImage()
+    {
         return $this->photo;
     }
 
+    public function getArticles()
+    {
+        return $this->hasMany(Article::className(),['user_id'=>'id']);
+    }
+
+    public function sendMail($view, $subject, $articles, $categories)
+    {
+        // Set layout params
+        \Yii::$app->mailer->getView()->params['name'] = $this->name;
+
+        $result = \Yii::$app->mailer->compose([
+            'html' => 'views/' . $view . '-html',
+            'text' => 'views/' . $view . '-text'
+        ], ['articles' => $articles, 'categories' => $categories])
+            ->setTo([$this->email => $this->name])
+            ->setSubject($subject)
+            ->send();
+
+        // Reset layout params
+        \Yii::$app->mailer->getView()->params['name'] = null;
+
+        return $result;
+    }
 }

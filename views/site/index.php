@@ -8,51 +8,74 @@ $this->title = 'HealthRecipes';
 
 <!--Start Main Container-->    
 <div class="section">
+    <!-- Start Carousel -->
+    <div style="margin-bottom:20px">
+        <?= $this->render('/partials/carousel', [
+                'recent'=>$recent
+            ]);?>   
+    </div> 
+        <!-- End Carousel --> 
     <!--Start Posts Container -->
-    <div class="container">
-        <!-- row -->
+   <div class="container">
+      <!--   Recent row -->
         <div class="row">
-            <div class="col-md-8">
-                <!-- post -->
-                <?php foreach($articles as $article):?>
-                <div class="post post-row">
-                    <a class="post-img"><img src="<?= $article->getImage()?>" alt=""></a>
+            <div class="col-md-12">
+                <div class="section-title">
+                    <h2 class="title">Популярные публикации</h2>
+                </div>
+            </div>
+            <!-- post -->
+            <?php foreach ($popular as $article):?>
+            <div class="col-md-4">
+                <div class="post">
+                    <a class="post-img" href="<?=Url::toRoute(['site/single', 'id'=>$article->id]);?>"><img src="<?= $article->getImage()?>" alt=""></a>
                     <div class="post-body">
                         <div class="post-category">
-                            <a href="<?= Url::toRoute(['site/category', 'id'=>$article->category->id]);?>"><?= $article->category->title;?></a>
+                            <a href="<?=Url::toRoute(['site/category', 'id'=>$article->category->id]);?>"><?= $article->category->title?></a>
                         </div>
-                        <h3 class="post-title"><a href="<?= Url::toRoute(['site/single','id'=>$article->id])?>"><?= $article->title?></a></h3>
+                        <h3 class="post-title"><a href="<?=Url::toRoute(['site/single', 'id'=>$article->id]);?>"><?= $article->title?></a></h3>
                         <ul class="post-meta">
-                            <li><a href="author.html"><?= $article->author->name?></a></li>
-                            <li><?= $article->getDate()?></li>
+                            <li><a href="<?=Url::toRoute(['site/author', 'id'=>$article->author->id]);?>"><?= $article->author->name?></a></li>
+                            <li><?= $article->date?></li>
                         </ul>
-                        <p><?= $article->description?></p>
                     </div>
                 </div>
-                <?php endforeach;?>                
                 <!-- /post -->
-            
-            <div class="section-row loadmore text-center">
-                <!-- Start Pagination -->
-                <?php        
-                    echo Pager::widget([
-                        'pagination' => $pagination,
-                        'maxButtonCount' => 2
-                        ]);
-                ?>
-                <!-- End Pagination -->
             </div>
+            <?php endforeach;?>
         </div>
-        <div class="col-md-4">
-        <!-- Start Sidebar -->
-        <?= $this->render('/partials/sidebar', [
-                'popular'=>$popular,
-                'recent'=>$recent,
-                'categories'=>$categories
-            ]);?>        
-        <!-- End Sidebar --> 
+       <!-- end Recent row -->
+       <!-- Categories-->
+       <div class="row">
+           <?php foreach ($categories as $category):?>
+            <div class="col-md-12">
+                <div class="section-title">
+                    <h2 class="title"><?=$category->title?></h2>
+                </div>
+            </div>
+            <!-- post -->
+            <?php foreach ($category->articles as $article):?>
+            <div class="col-md-4">
+                <div class="post">
+                    <a class="post-img" href="<?=Url::toRoute(['site/single', 'id'=>$article->id]);?>"><img src="<?= $article->getImage()?>" alt=""></a>
+                    <div class="post-body">
+                        <div class="post-category">
+                            <a href="<?=Url::toRoute(['site/category', 'id'=>$article->category->id]);?>"><?= $article->category->title?></a>
+                        </div>
+                        <h3 class="post-title"><a href="<?=Url::toRoute(['site/single', 'id'=>$article->id]);?>"><?= $article->title?></a></h3>
+                        <ul class="post-meta">
+                            <li><a href="author.html"><?= $article->author->name?></a></li>
+                            <li><?= $article->date?></li>
+                        </ul>
+                    </div>
+                </div>
+<!--                     /post -->
+            </div>
+            <?php endforeach;?>
+           <?php endforeach;?>
         </div>
-    </div>
-   <!-- End Posts Container -->
+<!--       End categories-->
+       
+<!--         End Posts Container -->
     </div>
 </div>
