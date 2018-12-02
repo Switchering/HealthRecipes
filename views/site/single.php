@@ -7,7 +7,7 @@ $this->title = $article->title;
 
 <!-- PAGE HEADER -->
 <div id="post-header" class="page-header">
-    <div class="page-header-bg" style="background-image: url('<?= $article->getImage()?>');"></div>
+    <div class="page-header-bg" style="background-image: url('<?= $article->getImage()?>');background-size:cover;"></div>
     <div class="container">
         <div class="row">
             <div class="col-md-10">
@@ -136,7 +136,7 @@ $this->title = $article->title;
                         'comments'=>$comments,
                         'commentForm'=>$commentForm,
                         'commentcount'=>$commentcount
-                    ])?>  
+                    ])?>
             </div>
             <div class="col-md-4">
                 <!-- Start Sidebar -->
@@ -144,8 +144,8 @@ $this->title = $article->title;
                         'popular'=>$popular,
                         'recent'=>$recent,
                         'categories'=>$categories
-                    ]);?>        
-                <!-- End Sidebar --> 
+                    ]);?>
+                <!-- End Sidebar -->
             </div>
         </div>
         <!-- /row -->

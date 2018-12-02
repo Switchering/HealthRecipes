@@ -132,7 +132,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
         return $this->hasMany(Article::className(),['user_id'=>'id']);
     }
 
-    public function sendMail($view, $subject, $articles, $categories)
+    public function sendMail($view, $subject, $articles, $categories,$subscribes)
     {
         // Set layout params
         \Yii::$app->mailer->getView()->params['name'] = $this->name;
@@ -141,7 +141,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             'html' => 'views/' . $view . '-html',
             'text' => 'views/' . $view . '-text'
         ], ['articles' => $articles, 'categories' => $categories])
-            ->setTo([$this->email => $this->name])
+            ->setTo($subscribes)
             ->setSubject($subject)
             ->send();
 
