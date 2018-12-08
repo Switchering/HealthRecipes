@@ -5,7 +5,7 @@ use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\CategorySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-$this->title = 'Комментарии';
+$this->title = 'Комментарии статьи: '.$comments[0]->article->title;
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="category-index">

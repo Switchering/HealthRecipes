@@ -25,7 +25,7 @@ use yii\helpers\ArrayHelper;
        \yii\helpers\ArrayHelper::map(\app\models\Category::find()->all(),'id', 'title')) ?>
 
     <?= $form->field($model, 'image')->fileInput(['maxlength' => true]) ?>
-    <?php if($model->getImage() != null):?>
+    <?php if($model->image != null):?>
     <div class="form-group">
         <?= Html::img($model->getImage(),['width'=>200]) ?>
         <?= Html::a('Удалить изображение', ['delimage','id'=>$model->id], ['class' => 'btn btn-danger']) ?>

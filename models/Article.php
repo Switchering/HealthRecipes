@@ -81,14 +81,14 @@ class Article extends \yii\db\ActiveRecord
 
     public function getImage()
     {
-        return ($this->image) ? '/uploads/' . $this->image : '/uploads/no-image.jpg';
+        return ($this->image) ? '/uploads/articles/' . $this->image : '/uploads/no-image.jpg';
     }
 
     public function deleteImage()
     {
-     $imageUpLoadModel = new ImageUpload();
+     $imageUpLoadModel = new ImageUpload(['folder'=>'articles']);
      $imageUpLoadModel->deleteCurrentImage($this->image);
-
+     $this->updateAttributes(['image'=>'']);
     }
 
     public function beforeDelete()

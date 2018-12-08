@@ -14,8 +14,16 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
+    <?= $form->field($model, 'image')->fileInput(['maxlength' => true]) ?>
+    <?php if($model->image != null):?>
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::img($model->getImage(),['width'=>200]) ?>
+        <?= Html::a('Удалить изображение', ['delimage','id'=>$model->id], ['class' => 'btn btn-danger']) ?>
+    </div>
+    <?php endif;?>
+
+    <div class="form-group">
+        <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

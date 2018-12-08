@@ -52,7 +52,17 @@ class Comment extends \yii\db\ActiveRecord
             'status' => 'Статус',
         ];
     }
+    public function getAll()
+    {
+      $comments = Comment::find()->all();
+      return $comments;
+    }
 
+    public function getUnset()
+    {
+      $comments = Comment::find()->where(['status'=>0])->all();
+      return $comments;
+    }
     /**
      * @return \yii\db\ActiveQuery
      */

@@ -87,9 +87,24 @@ class CategoryController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        $uploader = new ImageUpload(['folder'=>'categories']);
+        $image = $model->image;
+        if ($model->load(Yii::$app->request->post()) && $model->save())
+        {
+          $file = UploadedFile::getInstance($model,'image');
+          if($file != null){
+            if($model->saveImage($uploader->uploadFile($file, $image)))
+            {
+              return $this->redirect(['view', 'id' => $model->id]);
+            }
+          }
+          else
+          {
+            if($model->saveImage($image))
+            {
+              return $this->redirect(['view', 'id' => $model->id]);
+            }
+          }
         }
 
         return $this->render('update', [
@@ -97,6 +112,12 @@ class CategoryController extends Controller
         ]);
     }
 
+    public function actionDelimage($id)
+    {
+      $model = $this->findModel($id);
+      $model->deleteImage();
+      return $this->redirect(['update','id'=>$id]);
+    }
     /**
      * Deletes an existing Category model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
@@ -125,23 +146,5 @@ class CategoryController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
-    }
-    
-    public function actionSetImage($id)
-    {
-        $model = new ImageUpload;
-        
-        if (Yii::$app->request->isPost)
-        {
-            $category = $this->findModel($id);
-            $file = UploadedFile::getInstance($model,'image');
-            
-            if($category->saveImage($model->uploadFile($file, $category->image)))
-            {
-                return $this->redirect(['view', 'id'=>$category->id]);
-            }
-        }
-        
-        return $this->render('image', ['model'=>$model]);
     }
 }

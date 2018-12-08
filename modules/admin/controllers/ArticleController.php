@@ -85,7 +85,7 @@ class ArticleController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $uploader = new ImageUpload;
+        $uploader = new ImageUpload(['folder'=>'articles']);
         $image = $model->image;
         if ($model->load(Yii::$app->request->post()) && $model->saveArticle())
         {

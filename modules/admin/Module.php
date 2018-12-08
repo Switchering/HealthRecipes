@@ -4,6 +4,8 @@ namespace app\modules\admin;
 
 use yii\filters\AccessControl;
 use yii;
+use app\models\Comment;
+    Yii::$app->params['comments'] = Comment::getUnset();
 /**
  * admin module definition class
  */
@@ -14,6 +16,7 @@ class Module extends \yii\base\Module
      */
     public $layout = '/admin/main';
     public $controllerNamespace = 'app\modules\admin\controllers';
+
 
     /**
      * {@inheritdoc}

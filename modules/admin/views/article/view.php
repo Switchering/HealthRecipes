@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'content:ntext',
             'date',
             [
-              'attribute'=>'Изо',
+              'attribute'=>'Изображение',
               'value'=>$model->getImage(),
               'format' => ['image',['height'=>'100']],
             ],

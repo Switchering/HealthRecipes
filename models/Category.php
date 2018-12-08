@@ -38,60 +38,60 @@ class Category extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'title' => 'Title',
-            'image' => 'Image'
+            'title' => 'Заголовок',
+            'image' => 'Изображение'
         ];
     }
-    
-    public function saveImage($filename) 
+
+    public function saveImage($filename)
     {
         $this->image = $filename;
         return $this->save(false);
     }
-    
-    public function getImage() 
-    {    
-        return ($this->image) ? '/uploads/' . $this->image : 'public/images/no-image.png';
+
+    public function getImage()
+    {
+        return ($this->image) ? '/uploads/categories/' . $this->image : '/uploads/no-image.jpg';
     }
-    
+
     public function deleteImage()
     {
-     $imageUpLoadModel = new ImageUpload();
+     $imageUpLoadModel = new ImageUpload(['folder'=>'categories']);
      $imageUpLoadModel->deleteCurrentImage($this->image);
-        
+     $this->updateAttributes(['image'=>'']);
     }
-    
+
     public function beforeDelete()
     {
         $this->deleteImage();
         return parent::beforeDelete();
     }
-    
-    public function getArticles() 
+
+    public function getArticles()
     {
         return $this->hasMany(Article::className(),['category_id'=>'id']);
     }
-    
-    public function getArticlesCount() 
+
+    public function getArticlesCount()
     {
         return $this->getArticles()->count();
     }
-    
-    public function getAll($count) 
+
+    public function getAll($count)
     {
         $categories;
         if ($count != 0)
         {
-            $categories = Category::find()->limit($count)->all();  
+            $categories = Category::find()->limit($count)->all();
         }
         else
         {
-            $categories = Category::find()->all();            
+            $categories = Category::find()->all();
         }
-        
+
         return $categories;
     }
-    
+
     public function getPopular()
     {
         //return Categry::find()->orderBy('viewed desc')->limit(3)->all();
@@ -109,12 +109,12 @@ class Category extends \yii\db\ActiveRecord
         $articles = $query->offset($pagination->offset)
             ->limit($pagination->limit)
             ->all();
-        
+
         $data['articles'] = $articles;
         $data['pagination'] = $pagination;
-        
+
         return $data;
     }
-    
-    
+
+
 }

@@ -9,6 +9,7 @@ use yii\web\UploadedFile;
 class ImageUpload extends Model{
 
     public $image;
+    public $folder;
 
     public function rules() {
         return [
@@ -35,7 +36,7 @@ class ImageUpload extends Model{
     }
 
     public function getFolder() {
-        return Yii::getAlias('@web') . 'uploads/';
+        return Yii::getAlias('@web') . 'uploads/'.$this->folder.'/';
     }
 
     public function generateFileName() {
@@ -57,6 +58,4 @@ class ImageUpload extends Model{
             return file_exists($this->getFolder() . $currentImage);
         }
     }
-
-
 }
