@@ -40,6 +40,8 @@ class Article extends \yii\db\ActiveRecord
         return [
             [['title'], 'required'],
             [['title', 'description','content'],'string'],
+            [['category_id'], 'integer'],
+            [['image'], 'string'],
             [['title'],'string','max'=>255],
             [['date'],'date','format'=>'php:Y-m-d'],
             [['date'],'default','value'=>date('Y-m-d')],
@@ -53,79 +55,80 @@ class Article extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'title' => 'Title',
-            'description' => 'Description',
-            'content' => 'Content',
-            'date' => 'Date',
-            'image' => 'Image',
-            'viewed' => 'Viewed',
-            'user_id' => 'User ID',
-            'status' => 'Status',
-            'category_id' => 'Category ID',
+            'title' => 'Заголовок',
+            'description' => 'Описание',
+            'content' => 'Контент',
+            'date' => 'Дата',
+            'image' => 'Изображение',
+            'viewed' => 'Просмотров',
+            'user_id' => 'Автор',
+            'status' => 'Статус',
+            'category_id' => 'Категория',
         ];
     }
-    
+
     public function saveArticle()
     {
         $this->user_id = Yii::$app->user->id;
         return $this->save();
     }
-    
-    public function saveImage($filename) 
+
+    public function saveImage($filename)
     {
         $this->image = $filename;
         return $this->save(false);
     }
-    
-    public function getImage() 
-    {    
-        return ($this->image) ? '/uploads/' . $this->image : 'public/images/no-image.png';
+
+    public function getImage()
+    {
+        return ($this->image) ? '/uploads/' . $this->image : '/uploads/no-image.jpg';
     }
-    
+
     public function deleteImage()
     {
      $imageUpLoadModel = new ImageUpload();
      $imageUpLoadModel->deleteCurrentImage($this->image);
-        
+
     }
-    
+
     public function beforeDelete()
     {
         $this->deleteImage();
         return parent::beforeDelete();
     }
-    
-    public function getCategory() 
+
+    public function getCategory()
     {
-     return $this->hasOne(Category::className(), ['id'=>'category_id']);   
+     return $this->hasOne(Category::className(), ['id'=>'category_id']);
     }
-    
-    public function saveCategory($category_id) 
+
+    public function saveCategory($category_id)
     {
      $category = Category::findOne($category_id);
      if ($category != null)
      {
-        $this->link('category', $category);   
+        $this->link('category', $category);
         return true;
      }
     }
-    
-    public function getTags() 
+
+    public function getTags()
     {
         return $this->hasMany(Tag::className(), ['id'=>'tag_id'])->viaTable('article_tag', ['article_id'=>'id']);
     }
-    
-    public function getSelectedTags() 
+
+    public function getSelectedTags()
     {
         $selectedIds = $this->getTags()->select('id')->asArray()->all();
-        
+
         return ArrayHelper::getColumn($selectedIds, 'id');
     }
-    
-    public function saveTags($tags) 
+
+    public function saveTags($tags)
     {
         if (is_array($tags))
         {
+            ArticleTag::deleteAll(['article_id'=>$this->id]);
             foreach($tags as $tag_id)
             {
                 $tag = Tag::findOne($tag_id);
@@ -133,17 +136,12 @@ class Article extends \yii\db\ActiveRecord
             }
         }
     }
-    
-    public function clearCurrentTags() 
-    {
-        ArticleTag::deleteAll(['article_id'=>$this->id]);
-    }
-    
-    public function getDate() 
+
+    public function getDate()
     {
         return Yii::$app->formatter->asDate($this->date);
     }
-    
+
      public static function getAll($pageSize = 5)
     {
         // build a DB query to get all articles
@@ -156,29 +154,29 @@ class Article extends \yii\db\ActiveRecord
         $articles = $query->offset($pagination->offset)
             ->limit($pagination->limit)
             ->all();
-        
+
         $data['articles'] = $articles;
         $data['pagination'] = $pagination;
-        
+
         return $data;
     }
-    
+
     public static function getPopular()
     {
         return Article::find()->orderBy('viewed desc')->limit(3)->all();
     }
-    
+
     public static function getRecent()
     {
         return Article::find()->orderBy('date desc')->limit(3)->all();
     }
-    
+
     public static function getRelated($id)
     {
         $article = Article::findOne($id);
         return Article::find()->where(['user_id'=>$article->user_id])->limit(3)->all();
     }
-    
+
     public static function getPrevious($id)
     {
         $article = Article::find()->where(['id'=>($id-1)])->one();
@@ -192,7 +190,7 @@ class Article extends \yii\db\ActiveRecord
             return $article;
         }
     }
-    
+
     public static function getNext($id)
     {
         $article = Article::find()->where(['id'=>($id+1)])->one();
@@ -211,13 +209,13 @@ class Article extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Comment::className(), ['article_id'=>'id']);
     }
-    
+
     public function getArticleComments()
     {
         return $this->getComments()->where(['status'=>1])->all();
     }
-    
-    public function getCommentsCount() 
+
+    public function getCommentsCount()
     {
         return $this->getComments()->where(['status'=>1])->count();
 //        if($count !=null)
@@ -229,12 +227,12 @@ class Article extends \yii\db\ActiveRecord
 //            return 0;
 //        }
     }
-    
+
     public function getAuthor()
     {
         return $this->hasOne(User::className(), ['id'=>'user_id']);
     }
-    
+
     public function viewedCounter()
     {
         $this->viewed += 1;

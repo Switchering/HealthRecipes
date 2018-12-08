@@ -15,12 +15,12 @@ AppAsset::register($this);
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <?= Html::csrfMetaTags() ?>
         <title><?= Html::encode($this->title) ?></title>
-        
+
         <?php $this->head() ?>
     </head>
 
     <body>
-        
+
     <?php $this->beginBody() ?>
 
         <!-- HEADER -->
@@ -73,7 +73,7 @@ AppAsset::register($this);
                     <!-- nav -->
                         <ul class="nav-menu">
                             <li class="has-dropdown">
-                                <a href="/">Главная</a> 
+                                <a href="/">Главная</a>
                                     <div class="dropdown">
                                         <div class="dropdown-body">
                                             <ul class="dropdown-list">
@@ -97,6 +97,7 @@ AppAsset::register($this);
                 <div id="nav-aside">
                     <ul class="nav-aside-menu">
                         <li><a href="/">Главная</a></li>
+                        <li><a href="site/posts">Посты</a></li>
                         <li class="has-dropdown"><a>Категории</a>
                             <ul class="dropdown">
                                 <li><a href="site/categories">Все</a></li>
@@ -105,6 +106,9 @@ AppAsset::register($this);
                                 <?php endforeach;?>
                             </ul>
                         </li>
+                        <?php if(Yii::$app->user->identity->isAdmin):?>
+                        <li><a href="/admin/">Панель администратора</a></li>
+                        <?php endif;?>
                         <!--<li><a href="about.html">О нас</a></li>-->
                     </ul>
                     <button class="nav-close nav-aside-close"><span></span></button>
@@ -142,7 +146,7 @@ AppAsset::register($this);
                                     <ul>
                                         <?php foreach ($this->params['categories'] as $category):?>
                                         <li><a href="<?= Url::toRoute(['site/category','id'=>$category->id])?>"><?= $category->title?><span><?= $category->getArticlesCount();?></span></a></li>
-                                        <?php endforeach;?>                                        
+                                        <?php endforeach;?>
                                     </ul>
                                 </div>
                             </div>
@@ -183,7 +187,7 @@ AppAsset::register($this);
                     </div>
                         <div class="col-md-6 col-md-pull-6">
                             <div class="footer-copyright">
-                                &copy;<script>document.write(new Date().getFullYear());</script> HealthRecipes.ru, Все права защищены 
+                                &copy;<script>document.write(new Date().getFullYear());</script> HealthRecipes.ru, Все права защищены
                             </div>
                         </div>
                 </div>

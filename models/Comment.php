@@ -20,7 +20,7 @@ class Comment extends \yii\db\ActiveRecord
 {
     const STATUS_ALLOW = 1;
     const STATUS_DISALLOW = 0;
-    
+
     public static function tableName()
     {
         return 'comment';
@@ -46,10 +46,10 @@ class Comment extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'text' => 'Text',
-            'user_id' => 'User ID',
-            'article_id' => 'Article ID',
-            'status' => 'Status',
+            'text' => 'Текст',
+            'user_id' => 'Автор',
+            'article_id' => 'Статья',
+            'status' => 'Статус',
         ];
     }
 
@@ -67,23 +67,23 @@ class Comment extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
-    
-    public function getDate() 
+
+    public function getDate()
     {
         return Yii::$app->formatter->asDate($this->date);
     }
-    
+
     public function isAllowed()
     {
         return $this->status;
     }
-    
+
     public function allow()
     {
         $this->status = self::STATUS_ALLOW;
         return $this->save(false);
     }
-    
+
     public function disallow()
     {
         $this->status = self::STATUS_DISALLOW;

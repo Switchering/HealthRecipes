@@ -8,6 +8,7 @@ use app\models\ImageUpload;
 use app\models\Tag;
 use app\models\Article;
 use app\models\ArticleSearch;
+use app\models\Comment;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -72,26 +73,49 @@ class ArticleController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->saveArticle()) {
             return $this->redirect(['view', 'id' => $model->id]);
-        } 
+        }
         else
         {
             return $this->render('create', [
             'model' => $model,
-        ]);   
+        ]);
         }
     }
 
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->saveArticle()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        $uploader = new ImageUpload;
+        $image = $model->image;
+        if ($model->load(Yii::$app->request->post()) && $model->saveArticle())
+        {
+          $tags = Yii::$app->request->post('tags');
+          $model->saveTags($tags);
+          $file = UploadedFile::getInstance($model,'image');
+          if($file != null){
+            if($model->saveImage($uploader->uploadFile($file, $image)))
+            {
+              return $this->redirect(['view', 'id' => $model->id]);
+            }
+          }
+          else
+          {
+            if($model->saveImage($image))
+            {
+              return $this->redirect(['view', 'id' => $model->id]);
+            }
+          }
         }
-
         return $this->render('update', [
             'model' => $model,
         ]);
+    }
+
+    public function actionDelimage($id)
+    {
+      $model = $this->findModel($id);
+      $model->deleteImage();
+      return $this->redirect(['update','id'=>$id]);
     }
 
     /**
@@ -106,6 +130,13 @@ class ArticleController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+
+    public function actionComments($id)
+    {
+      $comments = Comment::find()->where(['article_id'=>$id])->orderBy('id desc')->all();
+
+      return $this ->render('/comment/single',['comments'=>$comments]);
     }
 
     /**
@@ -123,59 +154,27 @@ class ArticleController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
-    
-    public function actionSetImage($id)
+
+    public function actionExport()
     {
-        $model = new ImageUpload;
-        
-        if (Yii::$app->request->isPost)
-        {
-            $article = $this->findModel($id);
-            $file = UploadedFile::getInstance($model,'image');
-            
-            if($article->saveImage($model->uploadFile($file, $article->image)))
-            {
-                return $this->redirect(['view', 'id'=>$article->id]);
-            }
+        $data = "Номер;Название;Описание;Контент;Дата;Изображение;Количество просмотров;Автор;Статус;Категории;\r\n";
+        $model = Article::find()->All();
+        foreach ($model as $value) {
+          $content = str_replace("\r\n", '', $value->content);
+          $description = str_replace("\r\n", '', $value->description);
+            $data .= $value->id.
+                    ';' . $value->title .
+                    ';' . $description .
+                    ';' . $content .
+                    ';' . $value->date .
+                    ';' . $value->image .
+                    ';' . $value->viewed .
+                    ';' . $value->user_id .
+                    ';' . $value->status .
+                    ';' . $value->category_id .
+                    "\r\n";
+
         }
-        
-        return $this->render('image', ['model'=>$model]);
-    }
-    
-    public function actionSetCategory($id)
-    {
-        $article = $this->findModel($id);
-        $selectedCategory = ($article->category)? $article->category->id:0;
-        $categories = ArrayHelper::map(Category::find()->all(), 'id', 'title');
-        if(Yii::$app->request->isPost)
-        {
-            $category = Yii::$app->request->post('category');
-            if($article->saveCategory($category))
-            {
-                return $this->redirect(['view', 'id'=>$article->id]);
-            }
-        }
-        return $this->render('category', [
-            'article'=>$article,
-            'selectedCategory'=>$selectedCategory,
-            'categories'=>$categories
-        ]);
-    }
-    public function actionSetTags($id)
-    {
-        $article = $this->findModel($id);
-        $selectedTags = $article->getSelectedTags(); //
-        $tags = ArrayHelper::map(Tag::find()->all(), 'id', 'title');
-        if(Yii::$app->request->isPost)
-        {
-            $tags = Yii::$app->request->post('tags');
-            $article->saveTags($tags);
-            return $this->redirect(['view', 'id'=>$article->id]);
-        }
-        
-        return $this->render('tags', [
-            'selectedTags'=>$selectedTags,
-            'tags'=>$tags
-        ]);
+        echo iconv('utf-8', 'windows-1251',$data); //Если вдруг в Windows будут кракозябры
     }
 }

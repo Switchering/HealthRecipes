@@ -1,4 +1,4 @@
-<?php 
+<?php
 $itemSmall = null;
 foreach ($model->getBehavior('galleryBehavior')->getImages() as $image) {
     //        echo Html::img($image->getUrl('medium'));
@@ -23,7 +23,7 @@ if ($itemSmall != null && $itemMedium != null) {
     // HTML attributes for widget container
     'containerOptions' => ['class' => 'row'],
 
-    // Items for carousel. Empty array not allowed, exception will be throw, if empty 
+    // Items for carousel. Empty array not allowed, exception will be throw, if empty
     'items' => [
         Html::img('/uploads/119a4c68af57d7397de35299c19ca920.jpg'),
         Html::img('/uploads/733c6cd331a5706229dc94f0867bc10a.jpg'),
@@ -43,3 +43,8 @@ if ($itemSmall != null && $itemMedium != null) {
 
 ]); ?>
 
+return var_dump($model->tags);
+$tags = Yii::$app->request->post('tags');
+$model->saveTags($tags);
+
+    <?= Html::checkboxList('tags',$model->selectedTags, ArrayHelper::map(Tag::find()->all(), 'id', 'title'),['class'=>'form-control','multiple'=>true]) ?>

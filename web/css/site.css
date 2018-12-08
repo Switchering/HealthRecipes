@@ -747,6 +747,7 @@ textarea.input {
 }
 
 .post-img>img {
+  width: 100%;
   max-height: 200px;
   -webkit-transition: 1.6s -webkit-transform;
   transition: 1.6s -webkit-transform;
@@ -1343,6 +1344,16 @@ textarea.input {
 .tags-widget ul li a:hover, .tags-widget ul li a:focus {
   color: #fff !important;
   background-color: #ee4266;
+}
+/*=========================================================
+	Aside
+===========================================================*/
+.aside-img{
+  max-height: 200px;
+  -webkit-transition: 1.6s -webkit-transform;
+  transition: 1.6s -webkit-transform;
+  transition: 1.6s transform;
+  transition: 1.6s transform, 1.6s -webkit-transform;
 }
 
 /*----------------------------*\

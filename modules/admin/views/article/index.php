@@ -18,6 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a('Создать статью', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Экспорт статей', ['export'], ['class' => 'btn btn-primary']) ?>
     </p>
 
     <?= GridView::widget([
@@ -28,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'title',
-            'description:ntext', 
+            'description:ntext',
             [
                 'attribute' => 'content',
                 'value' => function ($model) {

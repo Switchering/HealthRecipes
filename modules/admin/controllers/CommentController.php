@@ -10,11 +10,11 @@ class CommentController extends Controller
     public function actionIndex()
     {
         $comments = Comment::find()->orderBy('id desc')->all();
-        
+
         return $this ->render('index',['comments'=>$comments]);
     }
     
-    public function actionDelete()
+    public function actionDelete($id)
     {
         $comment = Comment::findOne($id);
         if($comment->delete())
@@ -22,7 +22,7 @@ class CommentController extends Controller
             return $this->redirect(['comment/index']);
         }
     }
-    
+
     public function actionAllow($id)
     {
         $comment = Comment::findOne($id);
@@ -31,7 +31,7 @@ class CommentController extends Controller
             return $this->redirect(['index']);
         }
     }
-    
+
     public function actionDisallow($id)
     {
         $comment = Comment::findOne($id);

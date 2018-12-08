@@ -16,9 +16,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a('Изменить', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Прикрепить изображение', ['set-image', 'id' => $model->id], ['class' => 'btn btn-default']) ?>
-        <?= Html::a('Добавить категорию', ['set-category', 'id' => $model->id], ['class' => 'btn btn-default']) ?>
-        <?= Html::a('Добавить тэги', ['set-tags', 'id' => $model->id], ['class' => 'btn btn-default']) ?>
         <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
@@ -36,11 +33,15 @@ $this->params['breadcrumbs'][] = $this->title;
             'description:ntext',
             'content:ntext',
             'date',
-            'image',
+            [
+              'attribute'=>'Изо',
+              'value'=>$model->getImage(),
+              'format' => ['image',['height'=>'100']],
+            ],
             'viewed',
-            'user_id',
+            'author.name',
             'status',
-            'category_id',
+            'category.title',
         ],
     ]) ?>
 
