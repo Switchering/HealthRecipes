@@ -8,6 +8,7 @@ use app\models\User;
 use app\models\Category;
 use app\models\SignupForm;
 use app\models\Tag;
+use app\models\Article;
 
 Yii::$app->view->params['tags'] = Tag::getAll(8);
 Yii::$app->view->params['categories'] = Category::getAll(3);
@@ -37,22 +38,22 @@ class AuthController extends Controller
 
         return $this->goHome();
     }
-    
-    public function actionSignup() 
+
+    public function actionSignup()
     {
         $model = new SignupForm();
-        
+
         if(Yii::$app->request->isPost)
         {
             $model->load(Yii::$app->request->post());
             if($model->signup())
             {
-                return $this->redirect(['auth/login']);                
+                return $this->redirect(['auth/login']);
             }
         }
         return $this->render('signup',['model'=>$model]);
     }
-    
+
     public function actionLoginVk($uid, $first_name, $photo)
     {
         $user = new User();
@@ -60,21 +61,5 @@ class AuthController extends Controller
         {
             return $this->redirect(['site/index']);
         }
-    }
-    
-    public function actionTest()
-    {
-        $user = User::findOne(1);
-        Yii::$app->user->login($user);
-        
-        if(Yii::$app->user->isGuest)
-        {
-            echo 'Guest';
-        }
-        else
-        {
-            echo 'authorized';
-        }
-        //return $this->goHome();
     }
 }

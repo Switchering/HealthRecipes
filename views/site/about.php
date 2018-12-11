@@ -25,22 +25,24 @@ $this->title = 'О нас';
             <div class="col-md-5">
                 <div class="section-row">
                     <div class="section-title">
-                        <h2 class="title">Наша история</h2>
+                        <h2 class="title">Что такое HealthRecipes?</h2>
                     </div>
-                    <p></p>
-                    <blockquote class="blockquote">
+                    <p>HealthRecipes – это быстро развивающийся информационный портал о здоровом образе жизни.
+                      Мы предоставляем большое количество контента на разные темы: здоровье, питание, диеты и др.</p>
+                    <p>В планах и дальше развивать проект, улучшая текущие материалы, и создавать новые.</p>
+                    <!-- <blockquote class="blockquote">
                         <p></p>
                         <footer class="blockquote-footer"></footer>
-                    </blockquote>
+                    </blockquote> -->
                 </div>
             </div>
             <div class="col-md-7">
                 <div class="section-row">
                         <div class="section-title">
-                                <h2 class="title">Взгляды на мир</h2>
+                          <h2 class="title">Взгляды на мир</h2>
                         </div>
-                        <p></p>
-                        <p></p>
+                        <p>Наша цель заключается в создании лучшей информационной площадки в русскоязычном сегменте интернета по тематике здорового питания и здоровья в целом.</p>
+                        <p>Мы акцентируем внимание на качестве публикуемых материалов и интересах читателей.</p>
                 </div>
             </div>
         </div>

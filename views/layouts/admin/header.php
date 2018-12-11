@@ -65,15 +65,15 @@ AppAsset::register($this);
                 <ul class="dropdown-menu">
                     <!-- User image -->
                     <li class="user-header bg-light-blue">
-                        <img src="<?= $directoryAsset ?>/img/avatar5.png" class="img-circle" alt="User Image"/>
-
+                        <img src="<?= Yii::$app->user->identity->photo?>" class="img-circle" alt="User Image"/>
                         <p>
-                             - Web Developer
-                            <small>Member since Nov. 2012</small>
+                          <?= Yii::$app->user->identity->name?>
+                        </br>Разработчик
+                            <!-- <small>Member since Nov. 2012</small> -->
                         </p>
                     </li>
                     <!-- Menu Body -->
-                    <li class="user-body">
+                    <!-- <li class="user-body">
                         <div class="col-xs-4 text-center">
                             <a href="#">Followers</a>
                         </div>
@@ -83,15 +83,15 @@ AppAsset::register($this);
                         <div class="col-xs-4 text-center">
                             <a href="#">Friends</a>
                         </div>
-                    </li>
+                    </li> -->
                     <!-- Menu Footer-->
                     <li class="user-footer">
                         <div class="pull-left">
-                            <a href="#" class="btn btn-default btn-flat">Profile</a>
+                            <a href="#" class="btn btn-default btn-flat">Профиль</a>
                         </div>
                         <div class="pull-right">
                             <?= Html::a(
-                                    'Sign out',
+                                    'Выйти',
                                     ['/site/logout'],
                                     ['data-method' => 'post','class'=>'btn btn-default btn-flat']
                                 ) ?>

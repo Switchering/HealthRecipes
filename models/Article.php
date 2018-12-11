@@ -171,14 +171,14 @@ class Article extends \yii\db\ActiveRecord
         return Article::find()->orderBy('date desc')->limit(3)->all();
     }
 
-    public static function getRelated($id)
+    public function getRelated()
     {
-        $article = Article::findOne($id);
-        return Article::find()->where(['user_id'=>$article->user_id])->limit(3)->all();
+        return Article::find()->where(['user_id'=>$this->user_id])->limit(3)->all();
     }
 
-    public static function getPrevious($id)
+    public function getPrevious()
     {
+      $id = $this->id;
         $article = Article::find()->where(['id'=>($id-1)])->one();
         if($article!=null)
         {
@@ -191,8 +191,9 @@ class Article extends \yii\db\ActiveRecord
         }
     }
 
-    public static function getNext($id)
+    public function getNext()
     {
+      $id = $this->id;
         $article = Article::find()->where(['id'=>($id+1)])->one();
         if($article != null)
         {

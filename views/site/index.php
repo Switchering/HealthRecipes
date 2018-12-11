@@ -6,15 +6,15 @@ $this->title = 'HealthRecipes';
 ?>
 
 
-<!--Start Main Container-->    
+<!--Start Main Container-->
 <div class="section">
     <!-- Start Carousel -->
     <div style="margin-bottom:20px">
         <?= $this->render('/partials/carousel', [
                 'recent'=>$recent
-            ]);?>   
-    </div> 
-        <!-- End Carousel --> 
+            ]);?>
+    </div>
+        <!-- End Carousel -->
     <!--Start Posts Container -->
    <div class="container">
       <!--   Recent row -->
@@ -75,7 +75,7 @@ $this->title = 'HealthRecipes';
            <?php endforeach;?>
         </div>
 <!--       End categories-->
-       
+
 <!--         End Posts Container -->
     </div>
 </div>

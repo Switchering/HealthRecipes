@@ -33,7 +33,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['isAdmin'], 'integer'],
+            [['isAdmin','isSubscriber'], 'integer'],
             [['name', 'email', 'password', 'photo', 'about'], 'string', 'max' => 255],
         ];
     }
@@ -45,12 +45,13 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
-            'email' => 'Email',
-            'password' => 'Password',
-            'isAdmin' => 'Is Admin',
-            'photo' => 'Photo',
-            'about' => 'About',
+            'name' => 'Имя',
+            'email' => 'Почта',
+            'password' => 'Пароль',
+            'isAdmin' => 'Админ',
+            'photo' => 'Фото',
+            'about' => 'Обо мне',
+            'isSubscriber'=>'Подписчик'
         ];
     }
 
@@ -70,21 +71,6 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     public function getId()
     {
         return $this->id;
-    }
-
-    public function getAuthKey()
-    {
-
-    }
-
-    public function validateAuthKey($authKey)
-    {
-
-    }
-
-    public static function findIdentityByAccessToken($token, $type = null)
-    {
-
     }
 
     public static function findByName($name)
@@ -132,6 +118,16 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
         return $this->hasMany(Article::className(),['user_id'=>'id']);
     }
 
+    public function makeSubscriber($email)
+    {
+      $newsub = $this->findByEmail($email);  
+      if ($newsub != null)
+      {
+        $newsub->isSubscriber = 1;
+        $newsub->save();
+      }
+    }
+
     public function sendMail($view, $subject, $articles, $categories,$subscribes)
     {
         // Set layout params
@@ -149,5 +145,20 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
         \Yii::$app->mailer->getView()->params['name'] = null;
 
         return $result;
+    }
+
+    public function getAuthKey()
+    {
+
+    }
+
+    public function validateAuthKey($authKey)
+    {
+
+    }
+
+    public static function findIdentityByAccessToken($token, $type = null)
+    {
+
     }
 }

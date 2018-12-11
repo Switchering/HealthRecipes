@@ -223,4 +223,11 @@ class SiteController extends Controller
             'categories'=>$categories
         ]);
     }
+
+    public function actionMakesub($email)
+    {
+      $newsub = new User;
+      $newsub->makeSubscriber($email);
+      return $this->redirect(['/site/index']);
+    }
 }

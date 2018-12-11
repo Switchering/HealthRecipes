@@ -131,7 +131,7 @@ AppAsset::register($this);
                             <div class="footer-logo">
                                 <a href="index.html" class="logo"><img src="/images/logo-alt.png" alt=""></a>
                             </div>
-                            <p></p>
+                            <p>Начни жить с <span style="font-weight:600; color:#7FFF00">зелёного</span> листа.</p>
                             <ul class="contact-social">
                                 <li><a href="https://vk.com/vkhealthrecipes" class="social-vk"><i class="fa fa-vk"></i></a></li>
 <!--                                <li><a href="#" class="social-telegram"><i class="fa fa-telegram"></i></a></li>
@@ -167,10 +167,10 @@ AppAsset::register($this);
                         <div class="footer-widget">
                             <h3 class="footer-title">Подписка</h3>
                             <div class="newsletter-widget">
-                                <form>
+                                <form action="/site/makesub">
                                     <p>Чтобы не пропускать новые посты, подпишитесь на нашу рассылку:</p>
-                                    <input class="input" name="newsletter" placeholder="Введите Ваш Email">
-                                    <button class="primary-button">Подписаться</button>
+                                    <input class="input" name="email" placeholder="Введите Ваш Email">
+                                    <button class="submitButton primary-button" href>Подписаться</button>
                                 </form>
                             </div>
                         </div>
